@@ -24,7 +24,7 @@
 .cardAlert {
   background: var(--surface);
 
-  border-radius: var(--radius-lg);
+  border-radius: 50px;
 
   padding: 1.5rem;
 

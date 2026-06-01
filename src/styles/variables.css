@@ -35,8 +35,8 @@
 
   /* Bordas */
   --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-md: 50px;
+  --radius-lg: 25px;
 
   /* Transições */
   --transition: 0.3s ease;
