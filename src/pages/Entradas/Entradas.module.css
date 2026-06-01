@@ -1,0 +1,94 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  background: white;
+
+  padding: 1rem 1.5rem;
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.card svg {
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+
+.card div {
+  display: flex;
+  flex-direction: column;
+}
+
+.card strong {
+  font-size: 1.2rem;
+}
+
+.card span {
+  color: var(--text-secondary);
+  font-size: .9rem;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+
+  background: white;
+
+  padding: 1rem;
+
+  border-radius: var(--radius-md);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.searchBox input {
+  width: 100%;
+
+  border: none;
+  outline: none;
+}
+
+.tableWrapper {
+  background: white;
+
+  border-radius: var(--radius-lg);
+
+  overflow: hidden;
+
+  box-shadow: var(--shadow-sm);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 1rem;
+  text-align: left;
+}
+
+.table th {
+  background: #f8fafc;
+}
+
+.table tr:not(:last-child) {
+  border-bottom: 1px solid #e5e7eb;
+}

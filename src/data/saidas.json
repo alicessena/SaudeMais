@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "estoqueId": 2,
+    "quantidade": 10,
+    "motivo": "Uso hospitalar",
+    "responsavel": "Administrador",
+    "dataAprovacao": "2026-05-29"
+  },
+  {
+    "id": 2,
+    "estoqueId": 4,
+    "quantidade": 15,
+    "motivo": "Distribuição para enfermaria",
+    "responsavel": "Administrador",
+    "dataAprovacao": "2026-05-28"
+  },
+  {
+    "id": 3,
+    "estoqueId": 3,
+    "quantidade": 12,
+    "motivo": "Uso em procedimentos",
+    "responsavel": "Administrador",
+    "dataAprovacao": "2026-05-25"
+  }
+]

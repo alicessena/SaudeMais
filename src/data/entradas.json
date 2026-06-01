@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "estoqueId": 1,
+    "quantidade": 50,
+    "fornecedor": "Fornecedor Padrão",
+    "motivo": "Reposição de estoque",
+    "solicitante": "Alice Sena",
+    "dataAprovacao": "2026-06-01"
+  },
+  {
+    "id": 2,
+    "estoqueId": 5,
+    "quantidade": 30,
+    "fornecedor": "Fornecedor Padrão",
+    "motivo": "Compra emergencial",
+    "solicitante": "Carlos Santos",
+    "dataAprovacao": "2026-05-27"
+  },
+  {
+    "id": 3,
+    "estoqueId": 8,
+    "quantidade": 40,
+    "fornecedor": "Fornecedor Padrão",
+    "motivo": "Novo lote recebido",
+    "solicitante": "Pedro Henrique",
+    "dataAprovacao": "2026-06-01"
+  }
+]

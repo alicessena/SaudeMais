@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "medicamentoId": 1,
+    "quantidadeTotal": 180,
+    "quantidadeMinima": 50
+  },
+  {
+    "id": 2,
+    "medicamentoId": 2,
+    "quantidadeTotal": 25,
+    "quantidadeMinima": 30
+  },
+  {
+    "id": 3,
+    "medicamentoId": 3,
+    "quantidadeTotal": 95,
+    "quantidadeMinima": 40
+  },
+  {
+    "id": 4,
+    "medicamentoId": 4,
+    "quantidadeTotal": 15,
+    "quantidadeMinima": 25
+  },
+  {
+    "id": 5,
+    "medicamentoId": 5,
+    "quantidadeTotal": 120,
+    "quantidadeMinima": 35
+  },
+  {
+    "id": 6,
+    "medicamentoId": 6,
+    "quantidadeTotal": 75,
+    "quantidadeMinima": 20
+  },
+  {
+    "id": 7,
+    "medicamentoId": 7,
+    "quantidadeTotal": 18,
+    "quantidadeMinima": 30
+  },
+  {
+    "id": 8,
+    "medicamentoId": 8,
+    "quantidadeTotal": 60,
+    "quantidadeMinima": 25
+  },
+  {
+    "id": 9,
+    "medicamentoId": 9,
+    "quantidadeTotal": 40,
+    "quantidadeMinima": 15
+  },
+  {
+    "id": 10,
+    "medicamentoId": 10,
+    "quantidadeTotal": 8,
+    "quantidadeMinima": 20
+  }
+]

@@ -1,0 +1,112 @@
+[
+  {
+    "id": "SOL0001",
+    "medicamentoId": 1,
+    "quantidade": 50,
+    "tipoMovimento": "entrada",
+    "motivo": "Reposição de estoque",
+    "solicitante": "Alice Sena",
+    "status": "pendente",
+    "dataSolicitacao": "2026-06-01",
+    "responsavel": null
+  },
+  {
+    "id": "SOL0002",
+    "medicamentoId": 2,
+    "quantidade": 10,
+    "tipoMovimento": "saida",
+    "motivo": "Uso hospitalar",
+    "solicitante": "João Silva",
+    "status": "aprovada",
+    "dataSolicitacao": "2026-05-29",
+    "responsavel": "Administrador"
+  },
+  {
+    "id": "SOL0003",
+    "medicamentoId": 4,
+    "quantidade": 15,
+    "tipoMovimento": "saida",
+    "motivo": "Distribuição para enfermaria",
+    "solicitante": "Maria Oliveira",
+    "status": "concluida",
+    "dataSolicitacao": "2026-05-28",
+    "responsavel": "Administrador"
+  },
+  {
+    "id": "SOL0004",
+    "medicamentoId": 5,
+    "quantidade": 30,
+    "tipoMovimento": "entrada",
+    "motivo": "Compra emergencial",
+    "solicitante": "Carlos Santos",
+    "status": "reprovada",
+    "dataSolicitacao": "2026-05-27",
+    "responsavel": "Gestor"
+  },
+  {
+    "id": "SOL0005",
+    "medicamentoId": 7,
+    "quantidade": 20,
+    "tipoMovimento": "entrada",
+    "motivo": "Reposição mensal",
+    "solicitante": "Fernanda Lima",
+    "status": "pendente",
+    "dataSolicitacao": "2026-06-01",
+    "responsavel": null
+  },
+  {
+    "id": "SOL0006",
+    "medicamentoId": 10,
+    "quantidade": 25,
+    "tipoMovimento": "entrada",
+    "motivo": "Estoque abaixo do mínimo",
+    "solicitante": "Ricardo Alves",
+    "status": "aprovada",
+    "dataSolicitacao": "2026-05-30",
+    "responsavel": "Administrador"
+  },
+  {
+    "id": "SOL0007",
+    "medicamentoId": 3,
+    "quantidade": 12,
+    "tipoMovimento": "saida",
+    "motivo": "Uso em procedimentos",
+    "solicitante": "Juliana Costa",
+    "status": "concluida",
+    "dataSolicitacao": "2026-05-25",
+    "responsavel": "Administrador"
+  },
+  {
+    "id": "SOL0008",
+    "medicamentoId": 8,
+    "quantidade": 40,
+    "tipoMovimento": "entrada",
+    "motivo": "Novo lote recebido",
+    "solicitante": "Pedro Henrique",
+    "status": "pendente",
+    "dataSolicitacao": "2026-06-01",
+    "responsavel": null
+  },
+  {
+    "id": "SOL0009",
+    "medicamentoId": 6,
+    "quantidade": 8,
+    "tipoMovimento": "saida",
+    "motivo": "Atendimento ambulatorial",
+    "solicitante": "Camila Rocha",
+    "status": "concluida",
+    "dataSolicitacao": "2026-05-26",
+    "responsavel": "Administrador"
+  },
+  {
+    "id": "SOL0010",
+    "medicamentoId": 9,
+    "quantidade": 18,
+    "tipoMovimento": "saida",
+    "motivo": "Transferência interna",
+    "solicitante": "Lucas Ferreira",
+    "status": "reprovada",
+    "dataSolicitacao": "2026-05-24",
+    "responsavel": "Gestor"
+  }
+]
