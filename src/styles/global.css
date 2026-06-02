@@ -19,10 +19,18 @@ html {
 
 body {
   min-height: 100vh;
+
   font-family: "Poppins", sans-serif;
+
   background-color: var(--background);
+
   color: var(--text-primary);
+
   -webkit-font-smoothing: antialiased;
+
+  overflow-x: hidden;
+
+  line-height: 1.5;
 }
 
 /* Imagens */
@@ -95,4 +103,113 @@ table {
 ::selection {
   background: var(--primary);
   color: white;
+}
+
+/* Containers */
+
+.pageContainer {
+  width: 100%;
+  padding: 2rem;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+}
+
+/* Cards */
+
+.card {
+  background: var(--surface);
+
+  border-radius: var(--radius-lg);
+
+  padding: 1.5rem;
+
+  box-shadow: var(--shadow-sm);
+}
+
+/* Tabelas */
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Inputs */
+
+.formInput {
+  width: 100%;
+
+  height: 44px;
+
+  padding: 0 1rem;
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-md);
+
+  background: white;
+}
+
+.formInput:focus {
+  border-color: var(--primary);
+}
+
+/* Botões */
+
+.btnPrimary {
+  background: var(--primary);
+
+  color: white;
+
+  padding: 0.75rem 1.25rem;
+
+  border-radius: var(--radius-md);
+
+  transition: 0.2s;
+}
+
+.btnPrimary:hover {
+  background: var(--primary-dark);
+}
+
+.btnSecondary {
+  background: #e2e8f0;
+
+  color: var(--text-primary);
+
+  padding: 0.75rem 1.25rem;
+
+  border-radius: var(--radius-md);
+}
+
+/* Tablet */
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 15px;
+  }
+
+  .pageContainer {
+    padding: 1.5rem;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  .pageContainer {
+    padding: 1rem;
+  }
+
+  .pageTitle {
+    font-size: 1.5rem;
+  }
 }
