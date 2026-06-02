@@ -1,7 +1,4 @@
-import {
-  FaBell,
-  FaSearch,
-} from "react-icons/fa";
+import { FaSearch, FaBars } from "react-icons/fa";
 
 import { useLocation } from "react-router-dom";
 
@@ -20,8 +17,7 @@ function Header() {
     "/aprovacoes": "Aprovações",
   };
 
-  const currentPage =
-    pageTitles[location.pathname] || "Saúde Mais";
+  const currentPage = pageTitles[location.pathname] || "Saúde Mais";
 
   const today = new Date().toLocaleDateString("pt-BR", {
     day: "2-digit",
@@ -31,14 +27,14 @@ function Header() {
 
   return (
     <header className={styles.header}>
-      <div>
-        <h1 className={styles.title}>
-          {currentPage}
-        </h1>
+      <div className={styles.pageInfo}>
+        <button className={styles.mobileMenuButton}>
+          <FaBars />
+        </button>
 
-        <p className={styles.date}>
-          {today}
-        </p>
+        <h1 className={styles.title}>{currentPage}</h1>
+
+        <p className={styles.date}>{today}</p>
       </div>
 
       <div className={styles.actions}>
@@ -52,20 +48,13 @@ function Header() {
           />
         </div>
 
-
         <div className={styles.userContainer}>
-          <div className={styles.avatar}>
-            A
-          </div>
+          <div className={styles.avatar}>A</div>
 
           <div>
-            <h4 className={styles.userName}>
-              Administrador
-            </h4>
+            <h4 className={styles.userName}>Administrador</h4>
 
-            <p className={styles.userRole}>
-              Gestor
-            </p>
+            <p className={styles.userRole}>Gestor</p>
           </div>
         </div>
       </div>

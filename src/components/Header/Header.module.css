@@ -1,7 +1,15 @@
 .header {
   height: 80px;
 
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.85);
+
+  backdrop-filter: blur(12px);
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 20;
 
   display: flex;
   align-items: center;
@@ -132,4 +140,84 @@
   color: var(--text-secondary);
 
   font-size: 0.8rem;
+}
+
+.mobileMenuButton {
+  display: none;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 10px;
+
+  background: var(--background);
+
+  border: 1px solid var(--border);
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1rem;
+
+  color: var(--text-primary);
+}
+
+.pageInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+/* TABLET */
+
+@media (max-width: 1024px) {
+  .header {
+    padding: 0 1.5rem;
+  }
+
+  .searchContainer {
+    width: 220px;
+  }
+
+  .userContainer div:last-child {
+    display: none;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .header {
+    height: auto;
+
+    min-height: 72px;
+
+    padding: 1rem;
+
+    gap: 1rem;
+  }
+
+  .mobileMenuButton {
+    display: flex;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .date {
+    font-size: 0.75rem;
+  }
+
+  .searchContainer {
+    display: none;
+  }
+
+  .actions {
+    gap: 0.75rem;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+  }
 }
