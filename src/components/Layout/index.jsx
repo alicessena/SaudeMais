@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { useState } from "react";
 
 import Sidebar from "../Sidebar";
 import Header from "../Header";
@@ -6,12 +7,20 @@ import Header from "../Header";
 import styles from "./Layout.module.css";
 
 function Layout() {
+  const [sidebarOpen, setSidebarOpen] =
+  useState(false);
+
   return (
     <div className={styles.layout}>
-      <Sidebar />
+      <Sidebar
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+      />
 
       <div className={styles.content}>
-        <Header />
+        <Header
+          setSidebarOpen={setSidebarOpen}
+        />
 
         <main className={styles.main}>
           <Outlet />

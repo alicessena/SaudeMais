@@ -4,7 +4,9 @@ import { useLocation } from "react-router-dom";
 
 import styles from "./Header.module.css";
 
-function Header() {
+function Header({
+  setSidebarOpen,
+}) {
   const location = useLocation();
 
   const pageTitles = {
@@ -28,9 +30,14 @@ function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.pageInfo}>
-        <button className={styles.mobileMenuButton}>
-          <FaBars />
-        </button>
+        <button
+  className={styles.mobileMenuButton}
+  onClick={() =>
+    setSidebarOpen(prev => !prev)
+  }
+>
+  <FaBars />
+</button>
 
         <h1 className={styles.title}>{currentPage}</h1>
 
