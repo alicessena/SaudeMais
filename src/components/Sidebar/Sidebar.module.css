@@ -1,6 +1,6 @@
 .sidebar {
   width: 280px;
-  min-height: 100vh;
+  min-width: 280px;
 
   background: var(--sidebar-bg);
 
@@ -9,7 +9,7 @@
 
   padding: 1.5rem;
 
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
 }
 
 .logoContainer {
@@ -116,4 +116,56 @@
   color: rgba(255, 255, 255, 0.5);
 
   font-size: 0.8rem;
+}
+
+/* TABLET */
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 88px;
+    min-width: 88px;
+    padding: 1rem;
+  }
+
+  .logoTitle,
+  .logoSubtitle,
+  .link span:last-child,
+  .footer {
+    display: none;
+  }
+
+  .logoContainer {
+    justify-content: center;
+  }
+
+  .link,
+  .activeLink {
+    justify-content: center;
+  }
+
+  .icon {
+    font-size: 1.2rem;
+  }
+}
+
+/* CELULAR */
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+
+    top: 0;
+    left: -100%;
+
+    width: 280px;
+    height: 100vh;
+
+    z-index: 999;
+
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
+  }
+
+  .mobileOpen {
+    left: 0;
+  }
 }
