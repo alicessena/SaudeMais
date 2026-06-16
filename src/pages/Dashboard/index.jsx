@@ -1,4 +1,11 @@
-import { FaArrowTrendUp, FaBoxes, FaClipboardList, FaExclamationTriangle, FaPills } from "react-icons/fa6";
+import {
+  FaBoxes,
+  FaClipboardList,
+  FaExclamationTriangle,
+  FaPills,
+} from "react-icons/fa";
+
+import { FaArrowTrendUp } from "react-icons/fa6";
 import DashboardCharts from "../../components/DashboardCharts";
 import { Badge, Card, EmptyState } from "../../components/UI";
 import { useData } from "../../context/DataContext";
