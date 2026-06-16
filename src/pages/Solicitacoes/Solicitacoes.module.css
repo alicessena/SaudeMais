@@ -1,130 +1,32 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  display: grid;
+  gap: var(--space-lg);
 }
 
-.topBar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.pageHeader span {
+  color: var(--primary);
+  font-size: var(--font-caption);
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
-.newButton {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-
-  border: none;
-
-  padding: .9rem 1.3rem;
-
-  background: var(--primary);
-  color: white;
-
-  border-radius: var(--radius-md);
-
-  cursor: pointer;
+.pageHeader h1 {
+  margin-top: 0.25rem;
+  font-size: var(--font-h1);
 }
 
-.search {
-  width: 100%;
-
-  padding: .9rem;
-
-  border: 1px solid var(--border);
-
-  border-radius: var(--radius-md);
+.pageHeader p {
+  max-width: 720px;
+  color: var(--text-secondary);
 }
 
-.tableWrapper {
-  background: white;
-
-  border-radius: var(--radius-lg);
-
-  overflow: hidden;
-
-  box-shadow: var(--shadow-sm);
+.rowActions {
+  display: inline-flex;
+  gap: var(--space-sm);
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table th,
-.table td {
-  padding: 1rem;
-  text-align: left;
-}
-
-.table th {
-  background: #f8fafc;
-}
-
-.table tr:not(:last-child) {
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.actions {
-  display: flex;
-  gap: .5rem;
-}
-
-.approve,
-.reject {
-  border: none;
-
-  width: 35px;
-  height: 35px;
-
-  border-radius: 8px;
-
-  cursor: pointer;
-}
-
-.approve {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.reject {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-.pendente {
-  background: #fef3c7;
-  color: #92400e;
-
-  padding: .35rem .8rem;
-
-  border-radius: 999px;
-}
-
-.aprovada {
-  background: #dcfce7;
-  color: #166534;
-
-  padding: .35rem .8rem;
-
-  border-radius: 999px;
-}
-
-.reprovada {
-  background: #fee2e2;
-  color: #991b1b;
-
-  padding: .35rem .8rem;
-
-  border-radius: 999px;
-}
-
-.concluida {
-  background: #dbeafe;
-  color: #1d4ed8;
-
-  padding: .35rem .8rem;
-
-  border-radius: 999px;
+.muted {
+  color: var(--text-muted);
+  font-size: var(--font-caption);
+  font-weight: 800;
 }

@@ -1,16 +1,15 @@
 @import "./variables.css";
 
-/* Reset */
-
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
-/* Fonte */
+* {
+  margin: 0;
+  padding: 0;
+}
 
 html {
   font-size: 16px;
@@ -19,70 +18,68 @@ html {
 
 body {
   min-height: 100vh;
-
-  font-family: "Poppins", sans-serif;
-
-  background-color: var(--background);
-
+  background:
+    radial-gradient(circle at top left, rgba(18, 130, 76, 0.08), transparent 32rem),
+    var(--background);
   color: var(--text-primary);
-
-  -webkit-font-smoothing: antialiased;
-
-  overflow-x: hidden;
-
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-/* Imagens */
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-/* Links */
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* Botões */
-
-button {
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-/* Inputs */
-
+button,
 input,
 textarea,
 select {
-  font-family: inherit;
-  outline: none;
+  font: inherit;
 }
 
-/* Listas */
-
-ul,
-ol {
-  list-style: none;
+button {
+  cursor: pointer;
 }
 
-/* Tabelas */
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.64;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
 
 table {
   width: 100%;
   border-collapse: collapse;
 }
 
-/* Scrollbar */
+ul,
+ol {
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--primary) 42%, transparent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--text-inverse);
+}
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -90,126 +87,21 @@ table {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 999px;
+  background: var(--border-strong);
+  border: 2px solid var(--background);
+  border-radius: var(--radius-pill);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-dark);
-}
-
-/* Seleção de texto */
-
-::selection {
   background: var(--primary);
-  color: white;
 }
 
-/* Containers */
-
-.pageContainer {
-  width: 100%;
-  padding: 2rem;
+#root {
+  min-height: 100vh;
 }
-
-.pageTitle {
-  font-size: 2rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 2rem;
-}
-
-/* Cards */
-
-.card {
-  background: var(--surface);
-
-  border-radius: var(--radius-lg);
-
-  padding: 1.5rem;
-
-  box-shadow: var(--shadow-sm);
-}
-
-/* Tabelas */
-
-.tableWrapper {
-  width: 100%;
-  overflow-x: auto;
-}
-
-/* Inputs */
-
-.formInput {
-  width: 100%;
-
-  height: 44px;
-
-  padding: 0 1rem;
-
-  border: 1px solid var(--border);
-
-  border-radius: var(--radius-md);
-
-  background: white;
-}
-
-.formInput:focus {
-  border-color: var(--primary);
-}
-
-/* Botões */
-
-.btnPrimary {
-  background: var(--primary);
-
-  color: white;
-
-  padding: 0.75rem 1.25rem;
-
-  border-radius: var(--radius-md);
-
-  transition: 0.2s;
-}
-
-.btnPrimary:hover {
-  background: var(--primary-dark);
-}
-
-.btnSecondary {
-  background: #e2e8f0;
-
-  color: var(--text-primary);
-
-  padding: 0.75rem 1.25rem;
-
-  border-radius: var(--radius-md);
-}
-
-/* Tablet */
-
-@media (max-width: 1024px) {
-  html {
-    font-size: 15px;
-  }
-
-  .pageContainer {
-    padding: 1.5rem;
-  }
-}
-
-/* Mobile */
 
 @media (max-width: 768px) {
   html {
-    font-size: 14px;
-  }
-
-  .pageContainer {
-    padding: 1rem;
-  }
-
-  .pageTitle {
-    font-size: 1.5rem;
+    font-size: 15px;
   }
 }

@@ -1,195 +1,137 @@
+import { FaArrowTrendUp, FaBoxes, FaClipboardList, FaExclamationTriangle, FaPills } from "react-icons/fa6";
+import DashboardCharts from "../../components/DashboardCharts";
+import { Badge, Card, EmptyState } from "../../components/UI";
 import { useData } from "../../context/DataContext";
-import DashboardCharts
-from "../../components/DashboardCharts";
-import {
-  FaPills,
-  FaBoxes,
-  FaClipboardList,
-  FaExclamationTriangle,
-} from "react-icons/fa";
-
 import styles from "./Dashboard.module.css";
 
 function Dashboard() {
-  const {
-    medicamentos,
-    estoque,
-    solicitacoes,
-  } = useData();
+  const { medicamentos, estoque, solicitacoes } = useData();
 
-  const estoqueCritico = estoque.filter(
-    item => item.quantidadeTotal <= item.quantidadeMinima
-  );
+  const estoqueCritico = estoque.filter((item) => item.quantidadeTotal <= item.quantidadeMinima);
+  const solicitacoesPendentes = solicitacoes.filter((item) => item.status === "pendente");
+  const estoqueTotal = estoque.reduce((total, item) => total + item.quantidadeTotal, 0);
+  const concluida = solicitacoes.filter((item) => item.status === "concluida").length;
 
-  const solicitacoesPendentes = solicitacoes.filter(
-    item => item.status === "pendente"
-  );
+  const buscarMedicamento = (medicamentoId) => medicamentos.find((med) => med.id === medicamentoId);
 
-  const estoqueTotal = estoque.reduce(
-    (total, item) => total + item.quantidadeTotal,
-    0
-  );
-
-  const buscarMedicamento = (medicamentoId) => {
-    return medicamentos.find(
-      med => med.id === medicamentoId
-    );
-  };
-
+  const kpis = [
+    {
+      title: "Medicamentos",
+      value: medicamentos.length,
+      subtitle: "catálogo ativo",
+      icon: <FaPills />,
+      trend: "+12% este ciclo",
+      tone: "primary",
+    },
+    {
+      title: "Itens em estoque",
+      value: estoqueTotal,
+      subtitle: "unidades disponíveis",
+      icon: <FaBoxes />,
+      trend: "+8% vs. mês anterior",
+      tone: "info",
+    },
+    {
+      title: "Pendências",
+      value: solicitacoesPendentes.length,
+      subtitle: "aguardando análise",
+      icon: <FaClipboardList />,
+      trend: "SLA em atenção",
+      tone: "warning",
+    },
+    {
+      title: "Alertas críticos",
+      value: estoqueCritico.length,
+      subtitle: "abaixo do mínimo",
+      icon: <FaExclamationTriangle />,
+      trend: "repor primeiro",
+      tone: "danger",
+    },
+  ];
 
   return (
     <div className={styles.container}>
-      <div className={styles.welcome}>
-        <h2>Visão Geral do Sistema</h2>
-
-        <p>
-          Acompanhe o estoque, solicitações e
-          movimentações da farmácia.
-        </p>
-      </div>
-
-      <section className={styles.cards}>
-        <div className={styles.card}>
-          <div className={styles.cardIcon}>
-            <FaPills />
-          </div>
-
-          <div>
-            <h3>{medicamentos.length}</h3>
-            <p>Medicamentos Cadastrados</p>
-          </div>
+      <section className={styles.hero}>
+        <div>
+          <Badge tone="success">Painel executivo</Badge>
+          <h2>Visão geral da operação farmacêutica</h2>
+          <p>Acompanhe estoque, solicitações e movimentações com indicadores consolidados para tomada de decisão.</p>
         </div>
-
-        <div className={styles.card}>
-          <div className={styles.cardIcon}>
-            <FaBoxes />
-          </div>
-
-          <div>
-            <h3>{estoqueTotal}</h3>
-            <p>Itens em Estoque</p>
-          </div>
+        <div className={styles.heroMetric}>
+          <FaArrowTrendUp />
+          <strong>{Math.round((concluida / Math.max(solicitacoes.length, 1)) * 100)}%</strong>
+          <span>solicitações concluídas</span>
         </div>
+      </section>
 
-        <div className={styles.card}>
-          <div className={styles.cardIcon}>
-            <FaClipboardList />
-          </div>
-
-          <div>
-            <h3>{solicitacoesPendentes.length}</h3>
-            <p>Solicitações Pendentes</p>
-          </div>
-        </div>
-
-        <div className={styles.cardAlert}>
-          <div className={styles.cardIcon}>
-            <FaExclamationTriangle />
-          </div>
-
-          <div>
-            <h3>{estoqueCritico.length}</h3>
-            <p>Alertas de Estoque</p>
-          </div>
-        </div>
+      <section className={styles.kpiGrid} aria-label="Indicadores principais">
+        {kpis.map((item) => (
+          <Card key={item.title} className={styles.kpiCard}>
+            <div className={`${styles.kpiIcon} ${styles[item.tone]}`}>{item.icon}</div>
+            <div>
+              <span>{item.title}</span>
+              <strong>{item.value}</strong>
+              <p>{item.subtitle}</p>
+            </div>
+            <Badge tone={item.tone === "danger" ? "danger" : item.tone === "warning" ? "warning" : "success"}>
+              {item.trend}
+            </Badge>
+          </Card>
+        ))}
       </section>
 
       <DashboardCharts />
 
       <section className={styles.contentGrid}>
-        <div className={styles.alerts}>
-          <div className={styles.sectionHeader}>
-            <h3>Estoque Crítico</h3>
-          </div>
+        <Card className={styles.panel}>
+          <header>
+            <h3>Estoque crítico</h3>
+            <Badge tone={estoqueCritico.length ? "danger" : "success"}>{estoqueCritico.length} alertas</Badge>
+          </header>
 
           {estoqueCritico.length === 0 ? (
-            <p className={styles.empty}>
-              Nenhum medicamento com estoque baixo.
-            </p>
+            <EmptyState
+              icon={<FaBoxes />}
+              title="Sem medicamentos críticos"
+              description="Todos os itens estão acima do estoque mínimo configurado."
+            />
           ) : (
-            estoqueCritico.map((item) => {
-              const medicamento =
-                buscarMedicamento(item.medicamentoId);
+            <div className={styles.alertList}>
+              {estoqueCritico.map((item) => {
+                const medicamento = buscarMedicamento(item.medicamentoId);
+                const percent = Math.min(100, Math.round((item.quantidadeTotal / Math.max(item.quantidadeMinima, 1)) * 100));
 
-              return (
-                <div
-                  key={item.id}
-                  className={styles.alertItem}
-                >
-                  <h4>
-                    {medicamento?.nome}
-                  </h4>
-
-                  <span>
-                    Estoque Atual:
-                    {" "}
-                    {item.quantidadeTotal}
-                  </span>
-
-                  <span>
-                    Mínimo:
-                    {" "}
-                    {item.quantidadeMinima}
-                  </span>
-                </div>
-              );
-            })
+                return (
+                  <article key={item.id} className={styles.alertItem}>
+                    <div>
+                      <strong>{medicamento?.nome || "Medicamento não encontrado"}</strong>
+                      <span>
+                        {item.quantidadeTotal} em estoque · mínimo {item.quantidadeMinima}
+                      </span>
+                    </div>
+                    <div className={styles.progressTrack} aria-label={`Estoque em ${percent}% do mínimo`}>
+                      <span style={{ width: `${percent}%` }} />
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
           )}
-        </div>
+        </Card>
 
-        <div className={styles.stats}>
-          <div className={styles.sectionHeader}>
-            <h3>Estatísticas</h3>
-          </div>
+        <Card className={styles.panel}>
+          <header>
+            <h3>Fluxo de solicitações</h3>
+            <Badge tone="info">{solicitacoes.length} total</Badge>
+          </header>
 
-          <div className={styles.statRow}>
-            <span>Pendentes</span>
-
-            <strong>
-              {
-                solicitacoes.filter(
-                  s => s.status === "pendente"
-                ).length
-              }
-            </strong>
-          </div>
-
-          <div className={styles.statRow}>
-            <span>Aprovadas</span>
-
-            <strong>
-              {
-                solicitacoes.filter(
-                  s => s.status === "aprovada"
-                ).length
-              }
-            </strong>
-          </div>
-
-          <div className={styles.statRow}>
-            <span>Reprovadas</span>
-
-            <strong>
-              {
-                solicitacoes.filter(
-                  s => s.status === "reprovada"
-                ).length
-              }
-            </strong>
-          </div>
-
-          <div className={styles.statRow}>
-            <span>Concluídas</span>
-
-            <strong>
-              {
-                solicitacoes.filter(
-                  s => s.status === "concluida"
-                ).length
-              }
-            </strong>
-          </div>
-        </div>
+          {["pendente", "aprovada", "reprovada", "concluida"].map((status) => (
+            <div key={status} className={styles.statRow}>
+              <span>{status}</span>
+              <strong>{solicitacoes.filter((item) => item.status === status).length}</strong>
+            </div>
+          ))}
+        </Card>
       </section>
     </div>
   );

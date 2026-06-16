@@ -1,79 +1,48 @@
 import { NavLink } from "react-router-dom";
-
 import {
-  FaChartPie,
-  FaPills,
-  FaBoxes,
-  FaClipboardList,
   FaArrowDown,
   FaArrowUp,
+  FaBoxes,
+  FaChartPie,
   FaCheckCircle,
+  FaClipboardList,
   FaHeartbeat,
+  FaPills,
+  FaTimes,
 } from "react-icons/fa";
-
 import styles from "./Sidebar.module.css";
 
 const menuItems = [
-  {
-    path: "/",
-    label: "Dashboard",
-    icon: <FaChartPie />,
-  },
-  {
-    path: "/medicamentos",
-    label: "Medicamentos",
-    icon: <FaPills />,
-  },
-  {
-    path: "/estoque",
-    label: "Estoque",
-    icon: <FaBoxes />,
-  },
-  {
-    path: "/solicitacoes",
-    label: "Solicitações",
-    icon: <FaClipboardList />,
-  },
-  {
-    path: "/entradas",
-    label: "Entradas",
-    icon: <FaArrowDown />,
-  },
-  {
-    path: "/saidas",
-    label: "Saídas",
-    icon: <FaArrowUp />,
-  },
-  {
-    path: "/aprovacoes",
-    label: "Aprovações",
-    icon: <FaCheckCircle />,
-  },
+  { path: "/", label: "Dashboard", icon: <FaChartPie /> },
+  { path: "/medicamentos", label: "Medicamentos", icon: <FaPills /> },
+  { path: "/estoque", label: "Estoque", icon: <FaBoxes /> },
+  { path: "/solicitacoes", label: "Solicitações", icon: <FaClipboardList /> },
+  { path: "/entradas", label: "Entradas", icon: <FaArrowDown /> },
+  { path: "/saidas", label: "Saídas", icon: <FaArrowUp /> },
+  { path: "/aprovacoes", label: "Aprovações", icon: <FaCheckCircle /> },
 ];
 
-function Sidebar({sidebarOpen, setSidebarOpen}) {
-     console.log("sidebarOpen:", sidebarOpen);
+function Sidebar({ sidebarOpen, setSidebarOpen }) {
   return (
     <>
-      {sidebarOpen && (
-        <div className={styles.overlay} onClick={() => setSidebarOpen(false)} />
-      )}
-      <aside
-  className={`${styles.sidebar} ${
-    sidebarOpen
-      ? styles.mobileOpen
-      : ""
-  }`}
->
+      <button
+        className={`${styles.overlay} ${sidebarOpen ? styles.overlayVisible : ""}`}
+        aria-label="Fechar menu"
+        onClick={() => setSidebarOpen(false)}
+      />
+
+      <aside className={`${styles.sidebar} ${sidebarOpen ? styles.mobileOpen : ""}`} aria-label="Menu principal">
         <div className={styles.logoContainer}>
-          <div className={styles.logoIcon}>
+          <div className={styles.logoIcon} aria-hidden="true">
             <FaHeartbeat />
           </div>
-
-          <div>
-            <h1 className={styles.logoTitle}>Saúde Mais</h1>
-            <span className={styles.logoSubtitle}>Gestão Farmacêutica</span>
+          <div className={styles.brandText}>
+            <h1>Saúde Mais</h1>
+            <span>Gestão Farmacêutica</span>
           </div>
+          <button className={styles.closeButton} aria-label="Fechar menu" onClick={() => setSidebarOpen(false)}>
+            <FaTimes />
+          </button>
         </div>
 
         <nav className={styles.navigation}>
@@ -82,24 +51,21 @@ function Sidebar({sidebarOpen, setSidebarOpen}) {
               key={item.path}
               to={item.path}
               end={item.path === "/"}
+              title={item.label}
               onClick={() => {
-                if (window.innerWidth <= 768) {
-                  setSidebarOpen(false);
-                }
+                if (window.innerWidth <= 768) setSidebarOpen(false);
               }}
-              className={({ isActive }) =>
-                isActive ? styles.activeLink : styles.link
-              }
+              className={({ isActive }) => `${styles.link} ${isActive ? styles.activeLink : ""}`}
             >
               <span className={styles.icon}>{item.icon}</span>
-
-              <span>{item.label}</span>
+              <span className={styles.label}>{item.label}</span>
             </NavLink>
           ))}
         </nav>
 
         <div className={styles.footer}>
-          <p>Saúde Mais v1.0</p>
+          <strong>Saúde Mais</strong>
+          <span>v1.0 · Demo executiva</span>
         </div>
       </aside>
     </>

@@ -1,32 +1,21 @@
 import { useMemo, useState } from "react";
-
-import {
-  FaCheck,
-  FaPlus,
-  FaTimes,
-} from "react-icons/fa";
-
-import { useData } from "../../context/DataContext";
-
+import { FaCheck, FaClipboardList, FaPlus, FaTimes } from "react-icons/fa";
+import { Badge, Button, DataTable } from "../../components/UI";
 import SolicitacaoModal from "../../components/SolicitacaoModal";
-
+import { useData } from "../../context/DataContext";
 import styles from "./Solicitacoes.module.css";
 
+const statusTone = {
+  pendente: "warning",
+  aprovada: "success",
+  reprovada: "danger",
+  concluida: "info",
+};
+
 function Solicitacoes() {
-  const {
-    medicamentos,
-    solicitacoes,
-    addSolicitacao,
-    aprovarSolicitacao,
-    reprovarSolicitacao,
-  } = useData();
-
-  const [modalOpen, setModalOpen] =
-    useState(false);
-
-  const [busca, setBusca] =
-    useState("");
-
+  const { medicamentos, solicitacoes, addSolicitacao, aprovarSolicitacao, reprovarSolicitacao } = useData();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [busca, setBusca] = useState("");
   const [form, setForm] = useState({
     medicamentoId: "",
     tipoMovimento: "",
@@ -35,195 +24,98 @@ function Solicitacoes() {
     solicitante: "",
   });
 
-  const solicitacoesComMedicamento =
-    useMemo(() => {
-      return solicitacoes.filter(
-        (solicitacao) => {
-          const medicamento =
-            medicamentos.find(
-              (med) =>
-                med.id ===
-                Number(
-                  solicitacao.medicamentoId
-                )
-            );
+  const getMedicamentoNome = (medicamentoId) => medicamentos.find((med) => med.id === Number(medicamentoId))?.nome;
 
-          return medicamento?.nome
-            .toLowerCase()
-            .includes(
-              busca.toLowerCase()
-            );
-        }
+  const solicitacoesComMedicamento = useMemo(() => {
+    const termo = busca.toLowerCase();
+    return solicitacoes
+      .map((solicitacao) => ({
+        ...solicitacao,
+        medicamentoNome: getMedicamentoNome(solicitacao.medicamentoId) || "Não encontrado",
+      }))
+      .filter((solicitacao) =>
+        `${solicitacao.id} ${solicitacao.medicamentoNome} ${solicitacao.solicitante} ${solicitacao.status}`
+          .toLowerCase()
+          .includes(termo),
       );
-    }, [
-      solicitacoes,
-      medicamentos,
-      busca,
-    ]);
+  }, [busca, medicamentos, solicitacoes]);
 
   const criarSolicitacao = () => {
     addSolicitacao({
       ...form,
-      medicamentoId: Number(
-        form.medicamentoId
-      ),
-      quantidade: Number(
-        form.quantidade
-      ),
+      medicamentoId: Number(form.medicamentoId),
+      quantidade: Number(form.quantidade),
     });
 
     setModalOpen(false);
-
-    setForm({
-      medicamentoId: "",
-      tipoMovimento: "",
-      quantidade: "",
-      motivo: "",
-      solicitante: "",
-    });
+    setForm({ medicamentoId: "", tipoMovimento: "", quantidade: "", motivo: "", solicitante: "" });
   };
 
-  const getMedicamentoNome = (
-    medicamentoId
-  ) => {
-    return medicamentos.find(
-      (med) => med.id === medicamentoId
-    )?.nome;
-  };
+  const columns = [
+    { key: "id", header: "ID", sortable: true },
+    { key: "medicamentoNome", header: "Medicamento", sortable: true },
+    {
+      key: "tipoMovimento",
+      header: "Tipo",
+      sortable: true,
+      render: (item) => <Badge tone={item.tipoMovimento === "entrada" ? "success" : "info"}>{item.tipoMovimento}</Badge>,
+    },
+    { key: "quantidade", header: "Quantidade", sortable: true },
+    {
+      key: "status",
+      header: "Status",
+      sortable: true,
+      render: (item) => <Badge tone={statusTone[item.status] || "neutral"}>{item.status}</Badge>,
+    },
+    {
+      key: "acoes",
+      header: "Ações",
+      isActions: true,
+      render: (item) =>
+        item.status === "pendente" ? (
+          <div className={styles.rowActions}>
+            <Button variant="secondary" iconOnly aria-label={`Aprovar ${item.id}`} onClick={() => aprovarSolicitacao(item.id)}>
+              <FaCheck />
+            </Button>
+            <Button variant="danger" iconOnly aria-label={`Reprovar ${item.id}`} onClick={() => reprovarSolicitacao(item.id)}>
+              <FaTimes />
+            </Button>
+          </div>
+        ) : (
+          <span className={styles.muted}>Finalizada</span>
+        ),
+    },
+  ];
 
   return (
     <div className={styles.container}>
-      <div className={styles.topBar}>
+      <div className={styles.pageHeader}>
         <div>
+          <span>Workflow</span>
           <h1>Solicitações</h1>
-
-          <p>
-            Gerencie solicitações de
-            entrada e saída.
-          </p>
+          <p>Cadastre, acompanhe e aprove solicitações de entrada e saída de medicamentos.</p>
         </div>
-
-        <button
-          className={styles.newButton}
-          onClick={() =>
-            setModalOpen(true)
-          }
-        >
-          <FaPlus />
-          Nova Solicitação
-        </button>
       </div>
 
-      <input
-        className={styles.search}
-        placeholder="Buscar medicamento..."
-        value={busca}
-        onChange={(e) =>
-          setBusca(e.target.value)
+      <DataTable
+        columns={columns}
+        data={solicitacoesComMedicamento}
+        search={busca}
+        onSearch={setBusca}
+        searchPlaceholder="Buscar por ID, medicamento, solicitante ou status..."
+        emptyIcon={<FaClipboardList />}
+        emptyTitle="Nenhuma solicitação encontrada"
+        actions={
+          <Button onClick={() => setModalOpen(true)}>
+            <FaPlus />
+            Nova solicitação
+          </Button>
         }
       />
 
-      <div className={styles.tableWrapper}>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Medicamento</th>
-              <th>Tipo</th>
-              <th>Quantidade</th>
-              <th>Status</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {solicitacoesComMedicamento.map(
-              (solicitacao) => (
-                <tr key={solicitacao.id}>
-                  <td>
-                    {solicitacao.id}
-                  </td>
-
-                  <td>
-                    {getMedicamentoNome(
-                      solicitacao.medicamentoId
-                    )}
-                  </td>
-
-                  <td>
-                    {
-                      solicitacao.tipoMovimento
-                    }
-                  </td>
-
-                  <td>
-                    {
-                      solicitacao.quantidade
-                    }
-                  </td>
-
-                  <td>
-                    <span
-                      className={
-                        styles[
-                          solicitacao.status
-                        ]
-                      }
-                    >
-                      {
-                        solicitacao.status
-                      }
-                    </span>
-                  </td>
-
-                  <td>
-                    {solicitacao.status ===
-                      "pendente" && (
-                      <div
-                        className={
-                          styles.actions
-                        }
-                      >
-                        <button
-                          className={
-                            styles.approve
-                          }
-                          onClick={() =>
-                            aprovarSolicitacao(
-                              solicitacao.id
-                            )
-                          }
-                        >
-                          <FaCheck />
-                        </button>
-
-                        <button
-                          className={
-                            styles.reject
-                          }
-                          onClick={() =>
-                            reprovarSolicitacao(
-                              solicitacao.id
-                            )
-                          }
-                        >
-                          <FaTimes />
-                        </button>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              )
-            )}
-          </tbody>
-        </table>
-      </div>
-
       <SolicitacaoModal
         isOpen={modalOpen}
-        onClose={() =>
-          setModalOpen(false)
-        }
+        onClose={() => setModalOpen(false)}
         onSubmit={criarSolicitacao}
         form={form}
         setForm={setForm}

@@ -1,29 +1,15 @@
 import { useMemo, useState } from "react";
-
-import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
-
-import { useData } from "../../context/DataContext";
-
+import { FaEdit, FaPills, FaPlus, FaTrash } from "react-icons/fa";
+import { Badge, Button, DataTable } from "../../components/UI";
 import MedicamentoModal from "../../components/MedicamentoModal";
-
+import { useData } from "../../context/DataContext";
 import styles from "./Medicamentos.module.css";
 
 function Medicamentos() {
-  const {
-    medicamentos,
-    addMedicamento,
-    updateMedicamento,
-    deleteMedicamento,
-  } = useData();
-
-  const [modalOpen, setModalOpen] =
-    useState(false);
-
+  const { medicamentos, addMedicamento, updateMedicamento, deleteMedicamento } = useData();
+  const [modalOpen, setModalOpen] = useState(false);
   const [busca, setBusca] = useState("");
-
-  const [editandoId, setEditandoId] =
-    useState(null);
-
+  const [editandoId, setEditandoId] = useState(null);
   const [form, setForm] = useState({
     nome: "",
     principioAtivo: "",
@@ -31,190 +17,108 @@ function Medicamentos() {
     precoUnitario: "",
   });
 
-  const medicamentosFiltrados =
-    useMemo(() => {
-      return medicamentos.filter((item) =>
-        item.nome
-          .toLowerCase()
-          .includes(busca.toLowerCase())
-      );
-    }, [medicamentos, busca]);
+  const medicamentosFiltrados = useMemo(() => {
+    const termo = busca.toLowerCase();
+    return medicamentos.filter((item) =>
+      `${item.nome} ${item.principioAtivo} ${item.fabricante}`.toLowerCase().includes(termo),
+    );
+  }, [medicamentos, busca]);
 
   const abrirNovo = () => {
     setEditandoId(null);
-
-    setForm({
-      nome: "",
-      principioAtivo: "",
-      fabricante: "",
-      precoUnitario: "",
-    });
-
+    setForm({ nome: "", principioAtivo: "", fabricante: "", precoUnitario: "" });
     setModalOpen(true);
   };
 
-  const editarMedicamento = (
-    medicamento
-  ) => {
+  const editarMedicamento = (medicamento) => {
     setEditandoId(medicamento.id);
-
     setForm({
       nome: medicamento.nome,
-      principioAtivo:
-        medicamento.principioAtivo,
-      fabricante:
-        medicamento.fabricante,
-      precoUnitario:
-        medicamento.precoUnitario,
+      principioAtivo: medicamento.principioAtivo,
+      fabricante: medicamento.fabricante,
+      precoUnitario: medicamento.precoUnitario,
     });
-
     setModalOpen(true);
   };
 
   const salvarMedicamento = () => {
-    const payload = {
-      ...form,
-      precoUnitario: Number(
-        form.precoUnitario
-      ),
-    };
-
-    if (editandoId) {
-      updateMedicamento(
-        editandoId,
-        payload
-      );
-    } else {
-      addMedicamento(payload);
-    }
-
+    const payload = { ...form, precoUnitario: Number(form.precoUnitario) };
+    if (editandoId) updateMedicamento(editandoId, payload);
+    else addMedicamento(payload);
     setModalOpen(false);
   };
 
   const excluirMedicamento = (id) => {
-    const confirmar = window.confirm(
-      "Deseja excluir este medicamento?"
-    );
-
-    if (!confirmar) return;
-
-    deleteMedicamento(id);
+    if (window.confirm("Deseja excluir este medicamento?")) {
+      deleteMedicamento(id);
+    }
   };
+
+  const columns = [
+    { key: "nome", header: "Nome", sortable: true },
+    { key: "principioAtivo", header: "Princípio ativo", sortable: true },
+    {
+      key: "fabricante",
+      header: "Fabricante",
+      sortable: true,
+      render: (item) => <Badge tone="info">{item.fabricante}</Badge>,
+    },
+    {
+      key: "precoUnitario",
+      header: "Preço",
+      sortable: true,
+      render: (item) =>
+        item.precoUnitario.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }),
+    },
+    {
+      key: "acoes",
+      header: "Ações",
+      isActions: true,
+      render: (item) => (
+        <div className={styles.rowActions}>
+          <Button variant="ghost" iconOnly aria-label={`Editar ${item.nome}`} onClick={() => editarMedicamento(item)}>
+            <FaEdit />
+          </Button>
+          <Button variant="danger" iconOnly aria-label={`Excluir ${item.nome}`} onClick={() => excluirMedicamento(item.id)}>
+            <FaTrash />
+          </Button>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <div className={styles.container}>
-      <div className={styles.topBar}>
+      <div className={styles.pageHeader}>
         <div>
+          <span>Catálogo clínico</span>
           <h1>Medicamentos</h1>
-
-          <p>
-            Gerencie os medicamentos do
-            sistema.
-          </p>
+          <p>Gerencie medicamentos, fabricantes e preços unitários com uma base limpa para o estoque.</p>
         </div>
-
-        <button
-          onClick={abrirNovo}
-          className={styles.newButton}
-        >
-          <FaPlus />
-
-          Novo Medicamento
-        </button>
       </div>
 
-      <input
-        className={styles.search}
-        placeholder="Buscar medicamento..."
-        value={busca}
-        onChange={(e) =>
-          setBusca(e.target.value)
+      <DataTable
+        columns={columns}
+        data={medicamentosFiltrados}
+        search={busca}
+        onSearch={setBusca}
+        searchPlaceholder="Buscar por nome, princípio ativo ou fabricante..."
+        emptyIcon={<FaPills />}
+        emptyTitle="Nenhum medicamento encontrado"
+        actions={
+          <Button onClick={abrirNovo}>
+            <FaPlus />
+            Novo medicamento
+          </Button>
         }
       />
 
-      <div className={styles.tableWrapper}>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Princípio Ativo</th>
-              <th>Fabricante</th>
-              <th>Preço</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {medicamentosFiltrados.map(
-              (medicamento) => (
-                <tr key={medicamento.id}>
-                  <td>{medicamento.nome}</td>
-
-                  <td>
-                    {
-                      medicamento.principioAtivo
-                    }
-                  </td>
-
-                  <td>
-                    <span
-                      className={
-                        styles.badge
-                      }
-                    >
-                      {
-                        medicamento.fabricante
-                      }
-                    </span>
-                  </td>
-
-                  <td>
-                    R$
-                    {" "}
-                    {medicamento.precoUnitario.toFixed(
-                      2
-                    )}
-                  </td>
-
-                  <td>
-                    <div
-                      className={
-                        styles.actions
-                      }
-                    >
-                      <button
-                        onClick={() =>
-                          editarMedicamento(
-                            medicamento
-                          )
-                        }
-                      >
-                        <FaEdit />
-                      </button>
-
-                      <button
-                        onClick={() =>
-                          excluirMedicamento(
-                            medicamento.id
-                          )
-                        }
-                      >
-                        <FaTrash />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              )
-            )}
-          </tbody>
-        </table>
-      </div>
-
       <MedicamentoModal
         isOpen={modalOpen}
-        onClose={() =>
-          setModalOpen(false)
-        }
+        onClose={() => setModalOpen(false)}
         onSubmit={salvarMedicamento}
         form={form}
         setForm={setForm}

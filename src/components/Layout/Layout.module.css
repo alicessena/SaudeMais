@@ -1,42 +1,32 @@
 .layout {
   display: flex;
-
   min-height: 100vh;
-
   background: var(--background);
 }
 
 .content {
+  min-width: 0;
   flex: 1;
-
   display: flex;
   flex-direction: column;
-
-  min-width: 0;
 }
 
 .main {
   flex: 1;
-
-  overflow-y: auto;
-
-  padding: 2rem;
-
-  background: var(--background);
+  width: 100%;
+  max-width: 1640px;
+  margin: 0 auto;
+  padding: var(--space-xl);
 }
-
-/* TABLET */
 
 @media (max-width: 1024px) {
   .main {
-    padding: 1.5rem;
+    padding: var(--space-lg);
   }
 }
 
-/* MOBILE */
-
 @media (max-width: 768px) {
   .main {
-    padding: 1rem;
+    padding: var(--space-md);
   }
 }

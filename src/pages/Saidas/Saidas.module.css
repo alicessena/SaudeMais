@@ -1,93 +1,67 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  display: grid;
+  gap: var(--space-lg);
 }
 
-.header {
+.pageHeader {
   display: flex;
+  align-items: flex-end;
   justify-content: space-between;
-  align-items: center;
+  gap: var(--space-lg);
 }
 
-.card {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-
-  background: white;
-
-  padding: 1rem 1.5rem;
-
-  border-radius: var(--radius-lg);
-
-  box-shadow: var(--shadow-sm);
+.pageHeader span {
+  color: var(--primary);
+  font-size: var(--font-caption);
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
-.card svg {
-  font-size: 1.5rem;
-  color: #ef4444;
+.pageHeader h1 {
+  margin-top: 0.25rem;
+  font-size: var(--font-h1);
 }
 
-.card div {
-  display: flex;
-  flex-direction: column;
-}
-
-.card strong {
-  font-size: 1.2rem;
-}
-
-.card span {
+.pageHeader p {
+  max-width: 720px;
   color: var(--text-secondary);
-  font-size: .9rem;
 }
 
-.searchBox {
-  display: flex;
+.summaryCard {
+  min-width: 250px;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: center;
-  gap: .75rem;
-
-  background: white;
-
-  padding: 1rem;
-
-  border-radius: var(--radius-md);
-
-  box-shadow: var(--shadow-sm);
+  gap: var(--space-md);
+  padding: var(--space-md);
 }
 
-.searchBox input {
-  width: 100%;
-  border: none;
-  outline: none;
+.summaryCard svg {
+  color: var(--danger);
+  font-size: 1.45rem;
 }
 
-.tableWrapper {
-  background: white;
-
-  border-radius: var(--radius-lg);
-
-  overflow: hidden;
-
-  box-shadow: var(--shadow-sm);
+.summaryCard strong {
+  display: block;
+  font-size: 1.4rem;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
+.summaryCard div span {
+  color: var(--text-secondary);
+  text-transform: none;
 }
 
-.table th,
-.table td {
-  padding: 1rem;
-  text-align: left;
+.summaryCard > span:last-child {
+  grid-column: 1 / -1;
+  width: fit-content;
 }
 
-.table th {
-  background: #f8fafc;
-}
+@media (max-width: 760px) {
+  .pageHeader {
+    display: grid;
+  }
 
-.table tr:not(:last-child) {
-  border-bottom: 1px solid #e5e7eb;
+  .summaryCard {
+    min-width: 0;
+  }
 }
