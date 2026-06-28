@@ -24,14 +24,13 @@ function Solicitacoes() {
     solicitante: "",
   });
 
-  const getMedicamentoNome = (medicamentoId) => medicamentos.find((med) => med.id === Number(medicamentoId))?.nome;
-
   const solicitacoesComMedicamento = useMemo(() => {
     const termo = busca.toLowerCase();
     return solicitacoes
       .map((solicitacao) => ({
         ...solicitacao,
-        medicamentoNome: getMedicamentoNome(solicitacao.medicamentoId) || "Não encontrado",
+        medicamentoNome:
+          medicamentos.find((med) => med.id === Number(solicitacao.medicamentoId))?.nome || "Não encontrado",
       }))
       .filter((solicitacao) =>
         `${solicitacao.id} ${solicitacao.medicamentoNome} ${solicitacao.solicitante} ${solicitacao.status}`

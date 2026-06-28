@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState } from "react";
 import { notificationService }
 from "../services/notificationService";
@@ -8,6 +9,9 @@ import {
 
 const DataContext = createContext();
 
+const createId = () => Date.now();
+const createSolicitacaoId = () => `SOL${Date.now()}`;
+const createISODate = () => new Date().toISOString().split("T")[0];
 
 export function DataProvider({ children }) {
   const [medicamentos, setMedicamentosState] = useState(() =>
@@ -63,7 +67,7 @@ export function DataProvider({ children }) {
 const addMedicamento = (novoMedicamento) => {
   const medicamento = {
     ...novoMedicamento,
-    id: Date.now(),
+    id: createId(),
   };
 
   setMedicamentos([
@@ -135,13 +139,11 @@ const addSolicitacao = (
   novaSolicitacao
 ) => {
   const solicitacao = {
-    id: `SOL${Date.now()}`,
+    id: createSolicitacaoId(),
     status: "pendente",
 
     dataSolicitacao:
-      new Date()
-        .toISOString()
-        .split("T")[0],
+      createISODate(),
 
     responsavel: null,
 
@@ -227,7 +229,7 @@ const aprovarSolicitacao = (
     setEntradas([
       ...entradas,
       {
-        id: Date.now(),
+        id: createId(),
 
         estoqueId:
           estoqueItem.id,
@@ -245,9 +247,7 @@ const aprovarSolicitacao = (
           solicitacao.solicitante,
 
         dataAprovacao:
-          new Date()
-            .toISOString()
-            .split("T")[0],
+          createISODate(),
       },
     ]);
 
@@ -256,7 +256,7 @@ const aprovarSolicitacao = (
     setSaidas([
       ...saidas,
       {
-        id: Date.now(),
+        id: createId(),
 
         estoqueId:
           estoqueItem.id,
@@ -271,9 +271,7 @@ const aprovarSolicitacao = (
           "Administrador",
 
         dataAprovacao:
-          new Date()
-            .toISOString()
-            .split("T")[0],
+          createISODate(),
       },
     ]);
 
